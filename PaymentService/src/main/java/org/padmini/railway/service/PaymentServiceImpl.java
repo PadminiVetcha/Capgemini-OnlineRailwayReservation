@@ -21,30 +21,28 @@ public class PaymentServiceImpl implements PaymentService
 	@Autowired
 	UserRepository userRepo;
 	
-	/*
-	 * @Override public String abc(PaymentDetails payment) { long
-	 * pnr=payment.getPnrNo(); List<UserDetails> det=userRepo.findAll();
-	 * for(UserDetails x:det) { if(x.getPnrNo()==pnr) { userPayRepo.save(payment);
-	 * return "Your payment is successful..!!"; } else { new
-	 * ResourceNotFoundException("Booking is not done with PNR Number : "+pnr); } }
-	 * return null; }
-	 */
 	@Override
-	public String proceedToPay(PaymentDetails payment)
+	public List<PaymentDetails> getAll() {
+		List<PaymentDetails> payDetails=userPayRepo.findAll();
+		return payDetails;
+	}
+	
+	@Override
+	public void proceedToPay(PaymentDetails payment)
 	{
 		long pnrNo=payment.getPnrNo();
-		String msg=("Your payment is successful with PNR Number " +pnrNo);
-		 List<UserDetails> det=userRepo.findAll();
+		List<UserDetails> det=userRepo.findAll();
 		  for(UserDetails x:det) {
 				if(x.getPnrNo()==pnrNo) {
 					id=x.getId();
 				}	
 		}
 		UserDetails existingDetails=userRepo.findById(id)
-					.orElseThrow(()->new ResourceNotFoundException("Cannot delete as booking is done with PNR Number : "+pnrNo));
+					.orElseThrow(()->new ResourceNotFoundException("Cannot proceed the payment request as booking is not done with PNR Number : "+pnrNo));
 		userPayRepo.save(payment); 
-		return msg;
 	}
+	
+	
 	
 	//to update payment field in user details after successful payment
 	  public void updateUserPaymentDetails(long pnrNo)
@@ -58,5 +56,7 @@ public class PaymentServiceImpl implements PaymentService
 				}
 		  }
 	  }
+
+	
 	
 }

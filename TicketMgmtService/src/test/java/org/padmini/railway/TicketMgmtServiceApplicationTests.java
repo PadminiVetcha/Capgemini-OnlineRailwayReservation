@@ -38,7 +38,7 @@ class TicketMgmtServiceApplicationTests {
 	{
 		List<UserDetails> detailsList=new ArrayList<UserDetails>();
 		Passengers passengers = new Passengers(2, 4);
-		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers,"Pending");
+		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
 		detailsList.add(details);
 		when(userRepo.findAll()).thenReturn(detailsList);
 		List<UserDetails> detailsListNew=userSerImpl.getAll();
@@ -50,7 +50,7 @@ class TicketMgmtServiceApplicationTests {
 	public void addUserBookingDetailsTest()
 	{
 		Passengers passengers = new Passengers(2, 4);
-		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers,"Pending");
+		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
 		userSerImpl.addUserBookingDetails(details);
 		verify(userRepo,times(1)).save(details);
 	}
@@ -60,7 +60,7 @@ class TicketMgmtServiceApplicationTests {
 	public void getUserDetailsByIdTest()
 	{
 		Passengers passengers = new Passengers(2, 4);
-		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers,"pending");
+		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
 		long x=details.getPnrNo();
 		int y=details.getId();
 		when(userRepo.findById(y)).thenReturn(Optional.of(details));
@@ -83,7 +83,7 @@ class TicketMgmtServiceApplicationTests {
 	public void deleteUserBookingDetailsTest()
 	{
 		Passengers passengers = new Passengers(2, 4);
-		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers,"Pending");
+		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
 		long x=details.getPnrNo();
 		int y=details.getId();
 		when(userRepo.findById(y)).thenReturn(Optional.of(details));
