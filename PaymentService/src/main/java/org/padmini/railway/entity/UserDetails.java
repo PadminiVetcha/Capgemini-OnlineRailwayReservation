@@ -68,7 +68,7 @@ public class UserDetails
 	}
 	
 	public UserDetails(String name,int age,String sex, String address,int trainNo,String trainName,
-			String startStation, String destStation,String classType, Passengers passengers,String payment) 
+			String startStation, String destStation,String classType, Passengers passengers) 
 	{
 		this.name = name;
 		this.age = age;
@@ -80,7 +80,6 @@ public class UserDetails
 		this.destStation = destStation;
 		this.classType = classType;
 		this.passengers = passengers;
-		this.payment=payment;
 	}
 
 	public int getId() {
