@@ -49,13 +49,4 @@ public class TicketMgmtController
 	{
 		return userServiceImpl.deleteUserBookingDetails(pnrNo);
 	}
-	
-	//for payment
-	 @PostMapping("/pay/") 
-	 public String addPaymentDetails(@Valid @RequestBody PaymentDetails payment) 
-	 { 
-		  userServiceImpl.proceedToPay(payment); 
-		  userServiceImpl.updateUserPaymentDetails(payment.getPnrNo());
-		  return "Your payment is successful..!!"; 
-	 }
 }

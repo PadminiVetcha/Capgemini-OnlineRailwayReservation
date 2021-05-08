@@ -10,5 +10,4 @@ public interface UserService
 	public UserDetails getUserDetailsById(long pnrNo);
 	public String addUserBookingDetails(UserDetails userDetails);
 	public String deleteUserBookingDetails(long pnrNo); 
-	public void proceedToPay(PaymentDetails payment);
 }
