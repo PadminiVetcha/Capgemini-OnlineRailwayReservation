@@ -57,6 +57,19 @@ public class PaymentServiceImpl implements PaymentService
 		  }
 	  }
 
+	@Override
+	public String deletePayment(long pnrNo) {
+		List<UserDetails> userDetails=userRepo.findAll();
+		for(UserDetails x:userDetails) {
+				if(x.getPnrNo()==pnrNo) {
+					id=x.getId();
+				}	
+		}
+		userPayRepo.deleteById(id);
+		return "Money will be credited to your account within 7 days..";
+		
+	}
+
 	
 	
 }
