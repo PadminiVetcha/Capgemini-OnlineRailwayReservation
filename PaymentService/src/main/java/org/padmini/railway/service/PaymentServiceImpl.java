@@ -32,7 +32,7 @@ public class PaymentServiceImpl implements PaymentService
 	{
 		long pnrNo=payment.getPnrNo();
 		List<UserDetails> det=userRepo.findAll();
-		  for(UserDetails x:det) {
+		 for(UserDetails x:det) {
 				if(x.getPnrNo()==pnrNo) {
 					id=x.getId();
 				}	
@@ -59,14 +59,8 @@ public class PaymentServiceImpl implements PaymentService
 
 	@Override
 	public String deletePayment(long pnrNo) {
-		List<UserDetails> userDetails=userRepo.findAll();
-		for(UserDetails x:userDetails) {
-				if(x.getPnrNo()==pnrNo) {
-					id=x.getId();
-				}	
-		}
-		userPayRepo.deleteById(id);
-		return "Money will be credited to your account within 7 days..";
+		userPayRepo.deleteById(pnrNo);
+		return "You payment for "+pnrNo+ " will be credited to your account within 7 days..";
 		
 	}
 

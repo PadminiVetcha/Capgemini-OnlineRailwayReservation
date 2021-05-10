@@ -2,17 +2,11 @@ package org.padmini.railway.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import javax.validation.Valid;
-
 import static org.springframework.data.mongodb.core.query.Query.*;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.*;
-
-import org.padmini.railway.dao.UserPaymentRepository;
 import org.padmini.railway.dao.UserRepository;
 import org.padmini.railway.entity.DatabaseSequence;
-import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.entity.UserDetails;
 import org.padmini.railway.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +21,6 @@ public class UserServiceImpl implements UserService
 	int id;
 	@Autowired
 	UserRepository userRepo;
-	
-	@Autowired
-	UserPaymentRepository userPayRepo;
 	
 	@Autowired
 	private static MongoOperations mongo;
