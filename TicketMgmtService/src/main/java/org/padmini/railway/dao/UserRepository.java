@@ -1,5 +1,4 @@
 package org.padmini.railway.dao;
-import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.entity.UserDetails;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -7,6 +6,4 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface UserRepository extends MongoRepository<UserDetails, Integer>
 {
 
-	//void save(PaymentDetails payment);
-	
 }

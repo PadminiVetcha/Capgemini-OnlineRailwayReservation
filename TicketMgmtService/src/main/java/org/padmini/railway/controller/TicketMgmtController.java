@@ -1,9 +1,6 @@
 package org.padmini.railway.controller;
 import java.util.List;
-
 import javax.validation.Valid;
-
-import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.entity.UserDetails;
 import org.padmini.railway.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +37,7 @@ public class TicketMgmtController
 		userDetails.setId(UserServiceImpl.getNextSequence(userDetails.SEQUENCE_NAME));
 		userDetails.setPnrNo();
 		userDetails.setPayment("Pending");
-		return userServiceImpl.addUserBookingDetails(userDetails);
-		
+		return userServiceImpl.addUserBookingDetails(userDetails);	
 	}
 	
 	@DeleteMapping("/cancel/{pnrNo}")
