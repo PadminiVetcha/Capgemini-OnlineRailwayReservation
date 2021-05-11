@@ -84,5 +84,18 @@ class UserServiceApplicationTests {
 		assertEquals(50, det.getNoOfSeats());
 		assertEquals(fares, det.getTrainClassFares());
 	}
+	
+	@Test
+	public void getDetailsByStations()
+	{
+		List<TrainDetails> detailsList=new ArrayList<TrainDetails>();
+		TrainClassFares fares=new TrainClassFares(1000,750,500,430);
+		TrainDetails details=new TrainDetails(12345, "Abc Express", "Vizianagaram", 
+				"Hyderabad", "09:00Am", "05:00Pm", "8H", 50, fares);
+		detailsList.add(details);
+		assertEquals("Vizianagaram", details.getStartStation());
+		assertEquals("Hyderabad", details.getDestStation());
+
+	}
 
 }

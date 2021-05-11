@@ -15,7 +15,7 @@ public class UserController
 	@Autowired
 	private AdminServiceImpl adminServiceImpl;
 	
-	@GetMapping("/all")
+	@GetMapping("/alltrains")
 	public List<TrainDetails> getAllDetails()
 	{
 		return adminServiceImpl.getAllDetails();
@@ -27,10 +27,10 @@ public class UserController
 		return adminServiceImpl.getDetailsByTrainNo(trainNo);
 	}
 	
-	@GetMapping("/station/{destStation}")
-	public List<TrainDetails> getTrainDetailsByStartStation(@PathVariable String destStation)
+	@GetMapping("/{startStation}/{destStation}")
+	public List<TrainDetails> getTrainDetailsByStartStation(@PathVariable String startStation,@PathVariable String destStation)
 	{
-		return adminServiceImpl.getTrainDetailsByStartStation(destStation);
+		return adminServiceImpl.getTrainDetailsByStartStation(startStation,destStation);
 	}
 	
 	

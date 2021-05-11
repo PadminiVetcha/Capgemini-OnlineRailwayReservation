@@ -1,12 +1,10 @@
 package org.padmini.railway.service;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.padmini.railway.dao.AdminRepository;
 import org.padmini.railway.entity.TrainDetails;
 import org.padmini.railway.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,13 +29,14 @@ public class AdminServiceImpl implements AdminService
 	}
 
 	@Override
-	public List<TrainDetails> getTrainDetailsByStartStation(String destStation) {
+	public List<TrainDetails> getTrainDetailsByStartStation(String startStation,String destStation) {
 		List<TrainDetails> detList=adminRepo.findAll();
 		List<TrainDetails> req=new ArrayList<TrainDetails>();
 		for(TrainDetails tr:detList)
 		{
-			String stat=tr.getDestStation();
-			if(stat.equals(destStation))
+			String stat=tr.getStartStation();
+			String dest=tr.getDestStation();
+			if(stat.equals(startStation) && dest.equals(destStation))
 			{
 				req.add(tr);
 			}
