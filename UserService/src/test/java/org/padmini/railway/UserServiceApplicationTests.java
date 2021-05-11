@@ -86,6 +86,7 @@ class UserServiceApplicationTests {
 	}
 	
 	@Test
+	@DisplayName("Testing getTrainDetailsByStations method")
 	public void getDetailsByStations()
 	{
 		List<TrainDetails> detailsList=new ArrayList<TrainDetails>();
