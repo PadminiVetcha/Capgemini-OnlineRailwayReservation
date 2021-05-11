@@ -1,7 +1,11 @@
 package org.padmini.railway.service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
+import org.padmini.railway.controller.UserPaymentRepository;
 import org.padmini.railway.dao.AdminRepository;
+import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.entity.TrainDetails;
 import org.padmini.railway.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +17,33 @@ public class AdminServiceImpl implements AdminService
 	@Autowired
 	private AdminRepository adminRepo;
 	
+	@Autowired
+	private UserPaymentRepository userPayRepo;
+	
 	@Override
 	public List<TrainDetails> getAllDetails()
 	{
 		List<TrainDetails> trainDetails=new ArrayList<TrainDetails>();
 		adminRepo.findAll().forEach(trainDetails1 -> trainDetails.add(trainDetails1));
 		return trainDetails;
+	}
+	
+	@Override
+	public String pnrStatus(long pnrNo) 
+	{
+		Random rand = new Random();
+		List<String> status=new ArrayList<String>();
+		status.add("Confirm");
+		status.add("Waiting list");
+		List<PaymentDetails> li=userPayRepo.findAll();
+		
+		for(PaymentDetails det:li) {
+			if(det.getPnrNo()==pnrNo)
+			{
+				return status.get(rand.nextInt(status.size()));
+			}
+		}
+		return "Ticket is not booked with PNR Number "+pnrNo;
 	}
 	
 	@Override
@@ -43,4 +68,6 @@ public class AdminServiceImpl implements AdminService
 		}
 		return req;
 	}
+
+	
 }

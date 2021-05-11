@@ -3,7 +3,6 @@ import java.util.List;
 
 //imports
 import javax.validation.Valid;
-import org.springframework.ui.Model;
 import org.padmini.railway.dao.UserPaymentRepository;
 import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.service.PaymentServiceImpl;
@@ -31,11 +30,6 @@ public class PaymentController
 	{
 		return paySerImpl.getAll();
 	}
-	
-	/*
-	 * @GetMapping("/index") public String index(Model model) {
-	 * model.addAttribute("payDetails",paySerImpl.getAll()); return "index"; }
-	 */
 	
 	 @PostMapping("/add/") 
 	 public String addPaymentDetails(@Valid @RequestBody PaymentDetails payment) 

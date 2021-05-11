@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService
 	public List<UserDetails> getAll() {
 		List<UserDetails> userDetails=new ArrayList<UserDetails>();
 		userRepo.findAll().forEach(userDetails1 -> userDetails.add(userDetails1));
+		System.out.println(userDetails);
 		return userDetails;
 	}
 	

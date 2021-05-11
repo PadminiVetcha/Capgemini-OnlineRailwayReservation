@@ -21,6 +21,12 @@ public class UserController
 		return adminServiceImpl.getAllDetails();
 	}
 	
+	@GetMapping("/status/{pnrNo}")
+	public String getStatus(@PathVariable long pnrNo)
+	{
+		return adminServiceImpl.pnrStatus(pnrNo);
+	}
+	
 	@GetMapping("/trainNo/{trainNo}")
 	public TrainDetails getDetailsByTrainNo(@PathVariable Integer trainNo) 
 	{

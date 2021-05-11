@@ -1,10 +1,13 @@
 package org.padmini.railway;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -39,21 +42,33 @@ class PaymentServiceApplicationTests {
 	private UserPaymentRepository userPayRepo;
 
 	@BeforeAll public void init() { MockitoAnnotations.initMocks(this); }
+	
+	@Test
+	@DisplayName("Testing addUserBookingDetails method")
+	public void addUserBookingDetailsTest()
+	{
+		Passengers passengers = new Passengers(2, 4);
+		UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345, "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
+		userSerImpl.addUserBookingDetails(details);
+		//userRepo.save(details);
+		verify(userRepo,times(1)).save(details);
+		//System.out.println(details.getPnrNo());
+		//PaymentDetails payDetails=new PaymentDetails("1234567887654321", 0,123, "Bank Of Baroda", "FirstClassAc");
+		//paySerImpl.proceedToPay(payDetails);
+		//verify(userPayRepo,times(1)).save(payDetails);
+	}
 
-	/*
-	 * @Test
-	 * 
-	 * @DisplayName("Testing addUserBookingDetails method") public void
-	 * addUserBookingDetailsTest() { List<UserDetails> detailsList=new
-	 * ArrayList<UserDetails>(); Passengers passengers = new Passengers(2, 4);
-	 * UserDetails det=new UserDetails("Padmini", 23, "Female", "Vzm", 12345,
-	 * "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
-	 * PaymentDetails details=new PaymentDetails("1234567887654321", det.getPnrNo(),
-	 * 123, "Bank Of Baroda", "FirstClassAc");
-	 * userSerImpl.addUserBookingDetails(det); long x=det.getPnrNo();
-	 * System.out.println(x); detailsList.add(det); for(UserDetails de:detailsList)
-	 * { if(de.getPnrNo()==details.getPnrNo()) { paySerImpl.proceedToPay(details); }
-	 * } verify(userPayRepo,times(1)).save(details); }
-	 */
-
+	@Test
+	@DisplayName("Testing deletePaymentDetails Method")
+	public void deletePaymentDetails()
+	{
+		PaymentDetails payDetails=new PaymentDetails("1234567887654321", 1111111111 ,123, "Bank Of Baroda", "FirstClassAc");
+		when(userPayRepo.findById((long) 1111111111)).thenReturn(Optional.of(payDetails));
+		//delete train details with no 12345
+		paySerImpl.deletePayment(1111111111);
+		//verify whether delete is successful or not
+		List<PaymentDetails> detailsListNew=paySerImpl.getAll();
+		assertEquals(0, detailsListNew.size());
+	}
+	
 }
