@@ -63,11 +63,8 @@ public class UserServiceImpl implements UserService
 	@Override
 	public String addUserBookingDetails(UserDetails userDetails) {
 		userRepo.save(userDetails);	
-		
 		  try { sendEmail(userDetails.getPnrNo()); } catch (AddressException e) { 
-			  //TODO Auto-generated catch block 
 			  e.printStackTrace(); }
-		 
 		return ("Your ticket id booked successfully...!!!  "
 				+ "Your pnr number is "+ userDetails.getPnrNo() + " Please proceed to payment....");
 	}
@@ -97,16 +94,19 @@ public class UserServiceImpl implements UserService
 	  return !Objects.isNull(dbSeq) ? dbSeq.getSeq() : 1;
 	  } 
 	
+	//to send an email after booking of a train ticket
 	 public void sendEmail(long pnrNo) throws AddressException{
-		   final Email email = DefaultEmail.builder()
+		 String data1="Your train ticket booking is successful..!!";
+		 String data2= "Please Check the details....!!!!!!";
+		 UserDetails userDet=getUserDetailsById(pnrNo);
+		  final Email email = DefaultEmail.builder()
 		        .from(new InternetAddress("vetchapaddu13@gmail.com"))
 		        .replyTo(new InternetAddress("vetchapaddu13@gmail.com"))
 		        .to(Lists.newArrayList(new InternetAddress("vetchapaddu13@gmail.com")))
-		        .subject("Lorem ipsum")
-		        .body("Your ticket is booked with PNR Number: "+pnrNo)
+		        .subject("Your ticket is booked")
+		        .body(data1+ "\n"+data2+"\n"+userDet)
 		        .encoding("UTF-8")
 		        .build();
-
 		   emailService.send(email);
 		}
 }

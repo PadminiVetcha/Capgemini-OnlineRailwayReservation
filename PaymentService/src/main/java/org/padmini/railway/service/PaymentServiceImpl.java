@@ -1,7 +1,5 @@
 package org.padmini.railway.service;
-import java.util.Collection;
 import java.util.List;
-
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import org.padmini.railway.dao.UserPaymentRepository;
@@ -49,6 +47,8 @@ public class PaymentServiceImpl implements PaymentService
 		UserDetails existingDetails=userRepo.findById(id)
 					.orElseThrow(()->new ResourceNotFoundException("Cannot proceed the payment request as booking is not done with PNR Number : "+pnrNo));
 		userPayRepo.save(payment); 
+		try {sendEmail(payment);} 
+		catch (AddressException e) { e.printStackTrace();}
 	}
 	
 
@@ -72,19 +72,16 @@ public class PaymentServiceImpl implements PaymentService
 		  }
 	  }
 	  
-	 public void sendEmail(long pnrNo) throws AddressException{
-		   final Email email = DefaultEmail.builder()
-		        .from(new InternetAddress("vetchapaddu13@gmail.com"))
-		        .replyTo(new InternetAddress("vetchapaddu13@gmail.com"))
-		        .to(Lists.newArrayList(new InternetAddress("vetchapaddu13@gmail.com")))
-		        .subject("Lorem ipsum")
-		        .body("Your ticket is booked with PNR Number: "+pnrNo)
-		        .encoding("UTF-8")
-		        .build();
-
-		   emailService.send(email);
-		}
-
-	
-	
+	//to send an email after booking of a train ticket
+	public void sendEmail(PaymentDetails payment) throws AddressException{
+		final Email email = DefaultEmail.builder()
+			      .from(new InternetAddress("vetchapaddu13@gmail.com"))
+			      .replyTo(new InternetAddress("vetchapaddu13@gmail.com"))
+			      .to(Lists.newArrayList(new InternetAddress("vetchapaddu13@gmail.com")))
+			      .subject("Payment is Successful")
+			      .body("Your payment for PNR Number "+payment.getPnrNo()+" is Successful...!!!")
+			      .encoding("UTF-8")
+			      .build();
+			 emailService.send(email);
+	}
 }
