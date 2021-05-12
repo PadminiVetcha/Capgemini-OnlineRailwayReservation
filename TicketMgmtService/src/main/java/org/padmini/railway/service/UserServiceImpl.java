@@ -9,6 +9,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.*;
 import org.padmini.railway.dao.UserRepository;
 import org.padmini.railway.entity.DatabaseSequence;
+import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.entity.UserDetails;
 import org.padmini.railway.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 //import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.common.collect.Lists;
 
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService
 	private UserServiceImpl(MongoOperations mongo) {
 		this.mongo=mongo;
 	}
+	
 	@Override
 	public List<UserDetails> getAll() {
 		List<UserDetails> userDetails=new ArrayList<UserDetails>();
@@ -71,6 +74,8 @@ public class UserServiceImpl implements UserService
 	
 	@Override
 	public String deleteUserBookingDetails(long pnrNo) {
+		
+		
 		String msg=("Your booking ticket with PNR Number : "+ pnrNo+ " is cancelled."
 				+ "Your payment amount will be credited to your account within 5 to 7 days..!!!");
 		List<UserDetails> userDetails=userRepo.findAll();

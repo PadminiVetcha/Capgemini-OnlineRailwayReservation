@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -49,6 +50,9 @@ public class TicketMgmtController
 	@ApiOperation(value="Cancel a ticket")
 	public String deleteUserDetailsById(@PathVariable long pnrNo)
 	{
+		RestTemplate restTemplate=new RestTemplate();
+		String s=restTemplate.getForObject("http://localhost:8083/pay/cancel/"+pnrNo, String.class);
+		System.out.println(s);
 		return userServiceImpl.deleteUserBookingDetails(pnrNo);
 	}
 }
