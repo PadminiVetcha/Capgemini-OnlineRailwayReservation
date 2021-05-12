@@ -15,7 +15,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.padmini.railway.dao.UserRepository;
 import org.padmini.railway.entity.Passengers;
-import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.entity.UserDetails;
 import org.padmini.railway.service.UserServiceImpl;
 import org.springframework.boot.test.context.SpringBootTest;
