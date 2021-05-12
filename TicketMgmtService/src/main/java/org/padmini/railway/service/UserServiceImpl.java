@@ -2,6 +2,8 @@ package org.padmini.railway.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import static org.springframework.data.mongodb.core.query.Query.*;
 import static org.springframework.data.mongodb.core.query.Criteria.*;
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.*;
@@ -15,10 +17,19 @@ import org.springframework.data.mongodb.core.query.Update;
 //import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.stereotype.Service;
 
+import com.google.common.collect.Lists;
+
+import it.ozimov.springboot.mail.model.Email;
+import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
+import it.ozimov.springboot.mail.service.EmailService;
+
 @Service
 public class UserServiceImpl implements UserService 
 {
 	int id;
+	@Autowired
+	public EmailService emailService;
+	
 	@Autowired
 	UserRepository userRepo;
 	
@@ -52,6 +63,11 @@ public class UserServiceImpl implements UserService
 	@Override
 	public String addUserBookingDetails(UserDetails userDetails) {
 		userRepo.save(userDetails);	
+		
+		  try { sendEmail(userDetails.getPnrNo()); } catch (AddressException e) { 
+			  //TODO Auto-generated catch block 
+			  e.printStackTrace(); }
+		 
 		return ("Your ticket id booked successfully...!!!  "
 				+ "Your pnr number is "+ userDetails.getPnrNo() + " Please proceed to payment....");
 	}
@@ -80,4 +96,19 @@ public class UserServiceImpl implements UserService
 			  DatabaseSequence.class); 
 	  return !Objects.isNull(dbSeq) ? dbSeq.getSeq() : 1;
 	  } 
+	
+	 public void sendEmail(long pnrNo) throws AddressException{
+		   final Email email = DefaultEmail.builder()
+		        .from(new InternetAddress("vetchapaddu13@gmail.com"))
+		        .replyTo(new InternetAddress("vetchapaddu13@gmail.com"))
+		        .to(Lists.newArrayList(new InternetAddress("vetchapaddu13@gmail.com")))
+		        .subject("Lorem ipsum")
+		        .body("Your ticket is booked with PNR Number: "+pnrNo)
+		        .encoding("UTF-8")
+		        .build();
+
+		   emailService.send(email);
+		}
 }
+
+

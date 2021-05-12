@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/pay")
 public class PaymentController 
@@ -26,12 +28,14 @@ public class PaymentController
 	UserPaymentRepository userPayRepo;
 	
 	@GetMapping("/all")
+	@ApiOperation(value="Get all users who completed payment")
 	public List<PaymentDetails> getAll()
 	{
 		return paySerImpl.getAll();
 	}
 	
 	 @PostMapping("/add/") 
+	 @ApiOperation(value="Inorder to proceed to payment")
 	 public String addPaymentDetails(@Valid @RequestBody PaymentDetails payment) 
 	 { 
 		long pnrNo=payment.getPnrNo();
@@ -42,6 +46,7 @@ public class PaymentController
 	 }
 	 
 	 @DeleteMapping("/cancel/{pnrNo}")
+	 @ApiOperation(value="Inorder to cancel your payment")
 	 public String deletePaymentDetails(@PathVariable long pnrNo)
 	 {
 		 return paySerImpl.deletePayment(pnrNo);

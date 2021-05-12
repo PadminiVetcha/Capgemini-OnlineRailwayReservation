@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController 
@@ -22,18 +24,21 @@ public class AdminController
 	private AdminServiceImpl adminServiceImpl;
 	
 	@GetMapping("/all")
+	@ApiOperation(value="Get all train details")
 	public List<TrainDetails> getAllDetails()
 	{
 		return adminServiceImpl.getAllDetails();
 	}
 	
 	@GetMapping("/{trainNo}")
+	@ApiOperation(value="Get all train details by Train Number")
 	public TrainDetails getDetailsByTrainNo(@PathVariable Integer trainNo) 
 	{
 		return adminServiceImpl.getDetailsByTrainNo(trainNo);
 	}
 	
 	@PostMapping("/add")
+	@ApiOperation(value="Add new train details to train database")
 	public String addTrainDetails(@Valid @RequestBody TrainDetails trainDetails)
 	{
 		adminServiceImpl.addTrainDetails(trainDetails);
@@ -41,12 +46,14 @@ public class AdminController
 	}
 	
 	@PutMapping("/update/{trainNo}")
+	@ApiOperation(value="Update train details in train database by Train Number")
 	public TrainDetails updateTrainDetails(@PathVariable Integer trainNo,@Valid @RequestBody TrainDetails trainDetails)
 	{
 		return adminServiceImpl.updateTrainDetails(trainNo,trainDetails);
 	}
 	
 	@DeleteMapping("/delete/{trainNo}")
+	@ApiOperation(value="Delete train details in train database by Train Number")
 	public ResponseEntity<TrainDetails> deleteTrainDetails(@PathVariable Integer trainNo)
 	{
 		return adminServiceImpl.deleteTrainDetails(trainNo);

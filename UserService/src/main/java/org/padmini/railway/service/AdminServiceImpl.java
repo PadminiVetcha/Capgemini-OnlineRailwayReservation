@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.padmini.railway.controller.UserPaymentRepository;
+import org.padmini.railway.dao.UserPaymentRepository;
 import org.padmini.railway.dao.AdminRepository;
 import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.entity.TrainDetails;

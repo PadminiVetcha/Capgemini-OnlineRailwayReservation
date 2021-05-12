@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/user")
 public class TicketMgmtController 
@@ -20,18 +22,21 @@ public class TicketMgmtController
 	private UserServiceImpl userServiceImpl;
 	
 	@GetMapping("/all")
+	@ApiOperation(value="Get all user details who booked their tickets")
 	public List<UserDetails> getAll()
 	{
 		return userServiceImpl.getAll();
 	}
 	
 	@GetMapping("/{pnrNo}")
+	@ApiOperation(value="Get user details by Pnr Number")
 	public UserDetails getUserDetailsById(@PathVariable long pnrNo)
 	{
 		return userServiceImpl.getUserDetailsById(pnrNo);
 	}
 	
 	@PostMapping("/book/add")
+	@ApiOperation(value="Book a ticket")
 	public String addUserDetails(@Valid @RequestBody UserDetails userDetails)
 	{
 		userDetails.setId(UserServiceImpl.getNextSequence(userDetails.SEQUENCE_NAME));
@@ -41,6 +46,7 @@ public class TicketMgmtController
 	}
 	
 	@DeleteMapping("/cancel/{pnrNo}")
+	@ApiOperation(value="Cancel a ticket")
 	public String deleteUserDetailsById(@PathVariable long pnrNo)
 	{
 		return userServiceImpl.deleteUserBookingDetails(pnrNo);

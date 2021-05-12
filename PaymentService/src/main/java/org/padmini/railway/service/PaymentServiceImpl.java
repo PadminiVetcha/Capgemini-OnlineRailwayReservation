@@ -1,7 +1,9 @@
 package org.padmini.railway.service;
-
+import java.util.Collection;
 import java.util.List;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import org.padmini.railway.dao.UserPaymentRepository;
 import org.padmini.railway.dao.UserRepository;
 import org.padmini.railway.entity.PaymentDetails;
@@ -9,11 +11,18 @@ import org.padmini.railway.entity.UserDetails;
 import org.padmini.railway.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.google.common.collect.Lists;
+import it.ozimov.springboot.mail.model.Email;
+import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
+import it.ozimov.springboot.mail.service.EmailService;
 
 @Service
 public class PaymentServiceImpl implements PaymentService
 {
 	int id;
+	
+	@Autowired
+	public EmailService emailService;
 	
 	@Autowired
 	UserPaymentRepository userPayRepo;
@@ -42,11 +51,17 @@ public class PaymentServiceImpl implements PaymentService
 		userPayRepo.save(payment); 
 	}
 	
-	
+
+	@Override
+	public String deletePayment(long pnrNo) {
+		userPayRepo.deleteById(pnrNo);
+		return "You payment for "+pnrNo+ " will be credited to your account within 7 days..";
+		
+	}
 	
 	//to update payment field in user details after successful payment
-	  public void updateUserPaymentDetails(long pnrNo)
-	  {
+	 public void updateUserPaymentDetails(long pnrNo)
+	 {
 		  List<UserDetails> det=userRepo.findAll();
 		  for(UserDetails x:det) {
 			  //System.out.println(x);
@@ -56,13 +71,19 @@ public class PaymentServiceImpl implements PaymentService
 				}
 		  }
 	  }
+	  
+	 public void sendEmail(long pnrNo) throws AddressException{
+		   final Email email = DefaultEmail.builder()
+		        .from(new InternetAddress("vetchapaddu13@gmail.com"))
+		        .replyTo(new InternetAddress("vetchapaddu13@gmail.com"))
+		        .to(Lists.newArrayList(new InternetAddress("vetchapaddu13@gmail.com")))
+		        .subject("Lorem ipsum")
+		        .body("Your ticket is booked with PNR Number: "+pnrNo)
+		        .encoding("UTF-8")
+		        .build();
 
-	@Override
-	public String deletePayment(long pnrNo) {
-		userPayRepo.deleteById(pnrNo);
-		return "You payment for "+pnrNo+ " will be credited to your account within 7 days..";
-		
-	}
+		   emailService.send(email);
+		}
 
 	
 	
