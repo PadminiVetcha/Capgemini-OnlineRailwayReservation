@@ -110,7 +110,6 @@ public class AdminServiceApplicationTests
 		public void getDetailsByTrainNoTest1() 
 		{ 		
 			//Added train details
-			
 			TrainClassFares fares=new TrainClassFares(1500,1204,876,754);
 			Optional<TrainDetails> details=Optional.of(new TrainDetails(67892, "Howrah Express", "Chennai", 
 					"Howrah", "09:00Am", "05:00Pm", "8H", 50, fares));
