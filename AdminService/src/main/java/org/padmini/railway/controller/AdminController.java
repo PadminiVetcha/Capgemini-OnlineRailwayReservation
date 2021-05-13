@@ -58,4 +58,16 @@ public class AdminController
 	{
 		return adminServiceImpl.deleteTrainDetails(trainNo);
 	}
+	
+	//update the no of seats based on the no of passengers that booked ticket
+	@GetMapping("/updateSeats/{trainNo}/{noOfPassengers}")
+	public void updateSeats(@PathVariable int trainNo,@PathVariable int noOfPassengers)
+	{
+		TrainDetails currentTrain=adminServiceImpl.getDetailsByTrainNo(trainNo);
+		int initialSeats=currentTrain.getNoOfSeats();
+		int finalSeats=initialSeats-noOfPassengers;
+		currentTrain.setNoOfSeats(finalSeats);
+		adminServiceImpl.updateTrainDetails(trainNo, currentTrain);
+		
+	}
 }

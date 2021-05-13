@@ -2,6 +2,7 @@ package org.padmini.railway.controller;
 import java.util.List;
 import javax.validation.Valid;
 import org.padmini.railway.entity.UserDetails;
+import org.padmini.railway.entity.TrainDetails;
 import org.padmini.railway.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-
 import io.swagger.annotations.ApiOperation;
 
 @RestController
@@ -40,9 +40,15 @@ public class TicketMgmtController
 	@ApiOperation(value="Book a ticket")
 	public String addUserDetails(@Valid @RequestBody UserDetails userDetails)
 	{
+		RestTemplate restTemplate=new RestTemplate();
 		userDetails.setId(UserServiceImpl.getNextSequence(userDetails.SEQUENCE_NAME));
 		userDetails.setPnrNo();
 		userDetails.setPayment("Pending");
+		int trainNo=userDetails.getTrainNo();
+		int p1=userDetails.getPassengers().getAdults();
+		int p2=userDetails.getPassengers().getChildren();
+		int pass=p1+p2;
+		TrainDetails s=restTemplate.getForObject("http://localhost:8081/admin/updateSeats/"+trainNo+"/"+pass, TrainDetails.class);
 		return userServiceImpl.addUserBookingDetails(userDetails);	
 	}
 	
@@ -52,7 +58,7 @@ public class TicketMgmtController
 	{
 		RestTemplate restTemplate=new RestTemplate();
 		String s=restTemplate.getForObject("http://localhost:8083/pay/cancel/"+pnrNo, String.class);
-		System.out.println(s);
+		//System.out.println(s);
 		return userServiceImpl.deleteUserBookingDetails(pnrNo);
 	}
 }
