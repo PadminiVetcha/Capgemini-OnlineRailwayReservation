@@ -15,7 +15,6 @@ import org.padmini.railway.dao.UserPaymentRepository;
 import org.padmini.railway.dao.UserRepository;
 import org.padmini.railway.entity.PaymentDetails;
 import org.padmini.railway.service.PaymentServiceImpl;
-import org.padmini.railway.service.UserServiceImpl;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
@@ -24,9 +23,6 @@ class PaymentServiceApplicationTests {
 	
 	@InjectMocks
 	private PaymentServiceImpl paySerImpl;
-	
-	@InjectMocks
-	private UserServiceImpl userSerImpl;
 	
 	@Mock
 	private UserRepository userRepo;

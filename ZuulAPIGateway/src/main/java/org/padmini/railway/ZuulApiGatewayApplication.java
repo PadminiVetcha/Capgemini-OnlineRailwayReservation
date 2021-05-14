@@ -1,4 +1,4 @@
-package org.padmini.railway.ZuulAPIGateway;
+package org.padmini.railway;
 
 import org.padmini.railway.filters.ErrorFilter;
 import org.padmini.railway.filters.PostFilter;
@@ -36,9 +36,9 @@ public class ZuulApiGatewayApplication {
 	@Bean 
 	public ErrorFilter errorFilter() { return new ErrorFilter(); }
 	 
-	@RequestMapping(value = {"/","/user-service*","/admin-service*"})
+	@RequestMapping(value = {"/","/user-service/*","/admin-service/*"})
 	@HystrixCommand(fallbackMethod = "fallback_hello", 
-	commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "1000")})
+	commandProperties = {@HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "10000")})
 	public String hello() throws InterruptedException {
 	    Thread.sleep(3000);
 	    return "Welcome Hystrix";
