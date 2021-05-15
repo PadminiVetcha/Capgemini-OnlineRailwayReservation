@@ -31,12 +31,16 @@ public class AdminServiceImpl implements AdminService
 	@Override
 	public String pnrStatus(long pnrNo) 
 	{
+		//int count=0;
 		Random rand = new Random();
 		List<String> status=new ArrayList<String>();
 		status.add("Confirm");
 		status.add("Waiting list");
+		/*
+		 * if(count==0) { count=count+1; return status.get(rand.nextInt(status.size()));
+		 * }
+		 */
 		List<PaymentDetails> li=userPayRepo.findAll();
-		
 		for(PaymentDetails det:li) {
 			if(det.getPnrNo()==pnrNo)
 			{

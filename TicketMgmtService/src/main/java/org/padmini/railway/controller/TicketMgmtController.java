@@ -5,6 +5,7 @@ import org.padmini.railway.entity.UserDetails;
 import org.padmini.railway.entity.TrainDetails;
 import org.padmini.railway.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import io.swagger.annotations.ApiOperation;
 
+@Component
 @RestController
 @RequestMapping("/user")
 public class TicketMgmtController 
