@@ -1,4 +1,5 @@
 package org.padmini.railway.service;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -10,6 +11,11 @@ import org.padmini.railway.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DeliverCallback;
+
 import it.ozimov.springboot.mail.model.Email;
 import it.ozimov.springboot.mail.model.defaultimpl.DefaultEmail;
 import it.ozimov.springboot.mail.service.EmailService;
@@ -47,11 +53,13 @@ public class PaymentServiceImpl implements PaymentService
 		UserDetails existingDetails=userRepo.findById(id)
 					.orElseThrow(()->new ResourceNotFoundException("Cannot proceed the payment request as booking is not done with PNR Number : "+pnrNo));
 		userPayRepo.save(payment); 
-		try {sendEmail(payment);} 
-		catch (AddressException e) { e.printStackTrace();}
+		//For email notification after successful payment 
+		//Use sendEmail(paymentDetails payment) method
+		/*
+		 * try {sendEmail(payment);} catch (AddressException e) { e.printStackTrace();}
+		 */
 	}
 	
-
 	@Override
 	public String deletePayment(long pnrNo) {
 		userPayRepo.deleteById(pnrNo);
@@ -72,7 +80,7 @@ public class PaymentServiceImpl implements PaymentService
 		  }
 	  }
 	  
-	//to send an email after booking of a train ticket
+	//For email notification after successful payment
 	public void sendEmail(PaymentDetails payment) throws AddressException{
 		final Email email = DefaultEmail.builder()
 			      .from(new InternetAddress("vetchapaddu13@gmail.com"))
@@ -84,4 +92,35 @@ public class PaymentServiceImpl implements PaymentService
 			      .build();
 			 emailService.send(email);
 	}
+	
+	 public String sendNotification(String notification)
+	 {
+		 ConnectionFactory factory=new ConnectionFactory();
+		 factory.setHost("localhost");
+		 try(Connection connection=factory.newConnection();
+			 Channel channel=connection.createChannel()) {
+			 channel.queueDeclare("booking", false, false, false, null);
+			 channel.basicPublish("", "booking", null, notification.getBytes(StandardCharsets.UTF_8));
+			 System.out.println("Sent Message : "+notification);
+		 } catch(Exception e) {
+			 e.printStackTrace();
+		 }
+		 return "Payment is done..!!";
+	 }
+	 
+	 public void receiveNotification() throws Exception
+	 {
+		 ConnectionFactory connFactory=new ConnectionFactory();
+		 connFactory.setHost("localhost");
+		 Connection connection=connFactory.newConnection();
+		 Channel channel=connection.createChannel();
+		 channel.queueDeclare("booking", false, false, false, null);
+		 //System.out.println("Waiting for msgs..!! press ctrl+c to quit");
+		 DeliverCallback deliverCallBack=(ct,delivery)->{
+			 String msg=new String(delivery.getBody(),StandardCharsets.UTF_8);
+			 //response=msg;
+			 System.out.println("Received Message : "+msg);
+		 };
+		 channel.basicConsume("booking", true, deliverCallBack, c->{});
+	 }
 }

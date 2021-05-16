@@ -3,6 +3,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 //imports
@@ -24,18 +25,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
 
 import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/pay")
-public class PaymentController implements ChannelAwareMessageListener
+public class PaymentController 
 {
 	@Autowired
 	PaymentServiceImpl paySerImpl;
 	
 	@Autowired
 	UserPaymentRepository userPayRepo;
+	
 	
 	@GetMapping("/all")
 	@ApiOperation(value="Get all users who completed payment")
@@ -49,39 +53,50 @@ public class PaymentController implements ChannelAwareMessageListener
 	 public String addPaymentDetails(@Valid @RequestBody PaymentDetails payment) 
 	 { 
 		long pnrNo=payment.getPnrNo();
-		String msg=("Your payment is successful for PNR Number " +pnrNo);
+		//String msg=("Your payment is successful for PNR Number " +pnrNo);
+		//String msg="Item is pushed to rabbit mq..!!";
 		paySerImpl.proceedToPay(payment); 
 		paySerImpl.updateUserPaymentDetails(payment.getPnrNo());
-		return msg;  
+		String sent=paySerImpl.sendNotification("Your payment is successful for PNR Number " +pnrNo);
+		return sent;  
 	 }
 	 
-	 //@DeleteMapping("/cancel/{pnrNo}")
-	// @GetMapping("/cancel/{pnrNo}")
 	 @RequestMapping(
 			  value = "/cancel/{pnrNo}", 
 			  method = {RequestMethod.GET, RequestMethod.DELETE})
-	 
 	 @ApiOperation(value="Inorder to cancel your payment")
 	 public String deletePaymentDetails(@PathVariable long pnrNo)
 	 {
 		 return paySerImpl.deletePayment(pnrNo);
 	 }
 	 
-	 @Override
-	public void onMessage(Message message, Channel channel) throws Exception {
-			System.out.println("Received < " +message + " >");
-			byte[] byteArray=message.getBody();
-			UserDetails userDetails=(UserDetails) getObject(byteArray);
-			System.out.println("TICKET IS BOOKED...............................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-			//userServiceImpl.addUserBookingDetails(userDetails);
-			channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
-			
+	 @GetMapping("/add/receiveNotification")
+	 public void ReceiveMsg()
+	 {
+		 try {
+			paySerImpl.receiveNotification();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		private static Object getObject(byte[] byteArray) throws IOException,ClassNotFoundException
-		{
-			ByteArrayInputStream bis=new ByteArrayInputStream(byteArray);
-			ObjectInput in=new ObjectInputStream(bis); 
-			return in.readObject();
-		}
+	 }
+	 
+	 
+	 
+	 
+		/*
+		 * @Override public void onMessage(Message message, Channel channel) throws
+		 * Exception { System.out.println("Received < " +message + " >"); byte[]
+		 * byteArray=message.getBody(); UserDetails userDetails=(UserDetails)
+		 * getObject(byteArray); System.out.
+		 * println("TICKET IS BOOKED...............................!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+		 * ); //userServiceImpl.addUserBookingDetails(userDetails);
+		 * channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
+		 * 
+		 * }
+		 * 
+		 * private static Object getObject(byte[] byteArray) throws
+		 * IOException,ClassNotFoundException { ByteArrayInputStream bis=new
+		 * ByteArrayInputStream(byteArray); ObjectInput in=new ObjectInputStream(bis);
+		 * return in.readObject(); }
+		 */
 }
