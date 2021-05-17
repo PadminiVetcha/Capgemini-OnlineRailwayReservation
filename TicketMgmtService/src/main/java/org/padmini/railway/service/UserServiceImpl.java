@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService
 	public String deleteUserBookingDetails(long pnrNo) {
 		
 		
-		String msg=("Your booking ticket with PNR Number : "+ pnrNo+ " is cancelled."
+		String msg=("Your booking ticket with PNR Number : "+ pnrNo+ " is cancelled. "
 				+ "Your payment amount will be credited to your account within 5 to 7 days..!!!");
 		List<UserDetails> userDetails=userRepo.findAll();
 		for(UserDetails x:userDetails) {
@@ -84,7 +84,7 @@ public class UserServiceImpl implements UserService
 				}	
 		}
 		UserDetails existingDetails=userRepo.findById(id)
-					.orElseThrow(()->new ResourceNotFoundException("Cannot delete as booking is done with PNR Number : "+pnrNo));
+					.orElseThrow(()->new ResourceNotFoundException("Cannot delete as booking is not done with PNR Number : "+pnrNo));
 		userRepo.delete(existingDetails);
 		return msg;
 		}

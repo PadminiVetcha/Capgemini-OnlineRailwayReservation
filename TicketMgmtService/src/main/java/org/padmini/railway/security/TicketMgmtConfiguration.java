@@ -7,31 +7,31 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder; 
 import org.springframework.security.crypto.password.PasswordEncoder;
   
-@SuppressWarnings("deprecation")
-@EnableWebSecurity 
-public class TicketMgmtConfiguration extends WebSecurityConfigurerAdapter 
-{
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception  { 
-	  auth.inMemoryAuthentication()
-	  		.withUser("padmini").password("padminiuser").roles("USER"); 
-  }
+//@SuppressWarnings("deprecation")
+//@EnableWebSecurity 
+//public class TicketMgmtConfiguration extends WebSecurityConfigurerAdapter 
+//{
+//  @Override
+//  protected void configure(AuthenticationManagerBuilder auth) throws Exception  { 
+//	  auth.inMemoryAuthentication()
+//	  		.withUser("padmini").password("padminiuser").roles("USER"); 
+//  }
   
-  @Override 
-  protected void configure(HttpSecurity http) throws Exception  {
+//  @Override 
+//  protected void configure(HttpSecurity http) throws Exception  {
 	  
-	  http.httpBasic()
-	  .and().authorizeRequests()
-	  	  .antMatchers("/user/book/add","/user/cancel/**").hasRole("USER")
-	  	  .antMatchers("/user/all,/user/**").permitAll()
-	  	  .and().csrf().disable().headers().frameOptions().disable();
+//	  http.httpBasic()
+//	  .and().authorizeRequests()
+//	  	  .antMatchers("/user/book/add","/user/cancel/**").hasRole("USER")
+//	  	  .antMatchers("/user/all,/user/**").permitAll()
+//	  	  .and().csrf().disable().headers().frameOptions().disable();
 	  	  //.formLogin(); 
-	 }
+//	 }
   
-  @Bean
-  public PasswordEncoder getPasswordEncoder() 
-  { 
-	  return NoOpPasswordEncoder.getInstance(); 
-  } 
-}
+//  @Bean
+//  public PasswordEncoder getPasswordEncoder() 
+//  { 
+//	  return NoOpPasswordEncoder.getInstance(); 
+//  } 
+//}
  
