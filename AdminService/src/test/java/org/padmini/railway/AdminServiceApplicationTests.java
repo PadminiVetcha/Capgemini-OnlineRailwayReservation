@@ -218,7 +218,6 @@ public class AdminServiceApplicationTests
 	@DisplayName("Testing updateTrainDetails method")
 	class updateTrainDetailsTest
 	{
-	
 		@Test
 		@DisplayName("1.Testing updateTrainDetails method")
 		public void updateTrainDetailsTest1()
@@ -249,9 +248,7 @@ public class AdminServiceApplicationTests
 			//verify(adminRepo).findById(12345);
 		}
 		
-		
 		  @Test
-		  
 		  @DisplayName("2.Testing updateTrainDetails method") 
 		  public void updateTrainDetailsTest2() 
 		  { 
@@ -310,7 +307,6 @@ public class AdminServiceApplicationTests
 			 //System.out.println(updatedDetails); 
 			 //verify(adminRepo).findById(11111); 
 		}
-		 
 	}
 	
 	@Nested

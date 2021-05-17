@@ -25,8 +25,7 @@ public class AdminConfiguration extends WebSecurityConfigurerAdapter
 	  .and().authorizeRequests()
 	  	  .antMatchers("/admin/add","/admin/update/**","/admin/delete/**").hasRole("ADMIN")
 	  	  .antMatchers("/admin/all","/admin/").permitAll()
-	  	  .and().csrf().disable().headers().frameOptions().disable();
-	  	  //.formLogin(); 
+	  	  .and().csrf().disable().headers().frameOptions().disable(); 
 	 }
   
   @Bean

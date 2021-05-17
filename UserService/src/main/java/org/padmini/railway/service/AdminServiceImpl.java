@@ -21,29 +21,21 @@ public class AdminServiceImpl implements AdminService
 	private UserPaymentRepository userPayRepo;
 	
 	@Override
-	public List<TrainDetails> getAllDetails()
-	{
+	public List<TrainDetails> getAllDetails() {
 		List<TrainDetails> trainDetails=new ArrayList<TrainDetails>();
 		adminRepo.findAll().forEach(trainDetails1 -> trainDetails.add(trainDetails1));
 		return trainDetails;
 	}
 	
 	@Override
-	public String pnrStatus(long pnrNo) 
-	{
-		//int count=0;
+	public String pnrStatus(long pnrNo) {
 		Random rand = new Random();
 		List<String> status=new ArrayList<String>();
 		status.add("Confirm");
 		status.add("Waiting list");
-		/*
-		 * if(count==0) { count=count+1; return status.get(rand.nextInt(status.size()));
-		 * }
-		 */
-		List<PaymentDetails> li=userPayRepo.findAll();
-		for(PaymentDetails det:li) {
-			if(det.getPnrNo()==pnrNo)
-			{
+		List<PaymentDetails> paymentList=userPayRepo.findAll();
+		for(PaymentDetails det:paymentList) {
+			if(det.getPnrNo()==pnrNo) {
 				return status.get(rand.nextInt(status.size()));
 			}
 		}
@@ -51,8 +43,7 @@ public class AdminServiceImpl implements AdminService
 	}
 	
 	@Override
-	public TrainDetails getDetailsByTrainNo(int trainNo)
-	{
+	public TrainDetails getDetailsByTrainNo(int trainNo) {
 		return adminRepo.findById(trainNo)
 		.orElseThrow(()->new ResourceNotFoundException("Train not found with number : "+ trainNo));
 	}
@@ -72,6 +63,4 @@ public class AdminServiceImpl implements AdminService
 		}
 		return req;
 	}
-
-	
 }

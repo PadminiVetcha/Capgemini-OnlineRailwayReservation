@@ -31,21 +31,6 @@ class PaymentServiceApplicationTests {
 	private UserPaymentRepository userPayRepo;
 
 	@BeforeAll public void init() { MockitoAnnotations.initMocks(this); }
-	
-	/*
-	 * @Test
-	 * 
-	 * @DisplayName("Testing addUserBookingDetails method") public void
-	 * addUserBookingDetailsTest() { Passengers passengers = new Passengers(2, 4);
-	 * UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345,
-	 * "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
-	 * userSerImpl.addUserBookingDetails(details); userRepo.save(details);
-	 * verify(userRepo,times(1)).save(details);
-	 * System.out.println("PNR NUMBER IS"+details.getPnrNo()); PaymentDetails
-	 * payDetails=new PaymentDetails("1234567887654321", 0,123, "Bank Of Baroda",
-	 * "FirstClassAc"); paySerImpl.proceedToPay(payDetails);
-	 * verify(userPayRepo,times(1)).save(payDetails); }
-	 */
 
 	@Nested
 	@DisplayName("Testing deletePaymentDetails method")
@@ -90,5 +75,20 @@ class PaymentServiceApplicationTests {
 			assertEquals(0, detailsListNew.size());
 		}
 	}
+	
+	/*
+	 * @Test
+	 * 
+	 * @DisplayName("Testing addUserBookingDetails method") public void
+	 * addUserBookingDetailsTest() { Passengers passengers = new Passengers(2, 4);
+	 * UserDetails details=new UserDetails("Padmini", 23, "Female", "Vzm", 12345,
+	 * "Vishaka Express", "Vzm", "Vizag", "FirstClassAc", passengers);
+	 * userSerImpl.addUserBookingDetails(details); userRepo.save(details);
+	 * verify(userRepo,times(1)).save(details);
+	 * System.out.println("PNR NUMBER IS"+details.getPnrNo()); PaymentDetails
+	 * payDetails=new PaymentDetails("1234567887654321", 0,123, "Bank Of Baroda",
+	 * "FirstClassAc"); paySerImpl.proceedToPay(payDetails);
+	 * verify(userPayRepo,times(1)).save(payDetails); }
+	 */
 	
 }

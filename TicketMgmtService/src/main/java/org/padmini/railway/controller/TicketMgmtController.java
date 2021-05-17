@@ -65,10 +65,10 @@ public class TicketMgmtController
 		userDetails.setPnrNo();
 		userDetails.setPayment("Pending");
 		int trainNo=userDetails.getTrainNo();
-		int p1=userDetails.getPassengers().getAdults();
-		int p2=userDetails.getPassengers().getChildren();
-		int pass=p1+p2;
-		TrainDetails s=restTemplate.getForObject("http://localhost:8081/admin/updateSeats/"+trainNo+"/"+pass, TrainDetails.class);
+		int noOfAdults=userDetails.getPassengers().getAdults();
+		int noOfChildren=userDetails.getPassengers().getChildren();
+		int totalPassengers=noOfAdults+noOfChildren;
+		restTemplate.getForObject("http://localhost:8081/admin/updateSeats/"+trainNo+"/"+totalPassengers, TrainDetails.class);
 		return userServiceImpl.addUserBookingDetails(userDetails);	
 	}
 	
@@ -77,27 +77,23 @@ public class TicketMgmtController
 	public String deleteUserDetailsById(@PathVariable long pnrNo)
 	{
 		RestTemplate restTemplate=new RestTemplate();
-		String s=restTemplate.getForObject("http://localhost:8083/pay/cancel/"+pnrNo, String.class);
+		restTemplate.getForObject("http://localhost:8083/pay/cancel/"+pnrNo, String.class);
 		//System.out.println(s);
 		return userServiceImpl.deleteUserBookingDetails(pnrNo);
 	}
 	
 	@RequestMapping(value = "/authenticate", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
-
 		try {
 			authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
-			);
+					new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
 		}
 		catch (BadCredentialsException e) {
 			throw new Exception("Incorrect username or password", e);
 		}
 		final org.springframework.security.core.userdetails.UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
-
 		final String jwt = jwtTokenUtil.generateToken(userDetails);
-
 		return ResponseEntity.ok(new AuthenticationResponse(jwt));
 	}
 }

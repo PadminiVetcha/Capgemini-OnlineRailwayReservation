@@ -24,7 +24,7 @@ import it.ozimov.springboot.mail.service.EmailService;
 public class PaymentServiceImpl implements PaymentService
 {
 	int id;
-	
+
 	@Autowired
 	public EmailService emailService;
 	
@@ -50,7 +50,7 @@ public class PaymentServiceImpl implements PaymentService
 					id=x.getId();
 				}	
 		}
-		UserDetails existingDetails=userRepo.findById(id)
+		userRepo.findById(id)
 					.orElseThrow(()->new ResourceNotFoundException("Cannot proceed the payment request as booking is not done with PNR Number : "+pnrNo));
 		userPayRepo.save(payment); 
 		//For email notification after successful payment 
@@ -64,14 +64,13 @@ public class PaymentServiceImpl implements PaymentService
 	public String deletePayment(long pnrNo) {
 		userPayRepo.deleteById(pnrNo);
 		return "You payment for "+pnrNo+ " will be credited to your account within 7 days..";
-		
 	}
 	
 	//to update payment field in user details after successful payment
 	 public void updateUserPaymentDetails(long pnrNo)
 	 {
-		  List<UserDetails> det=userRepo.findAll();
-		  for(UserDetails x:det) {
+		  List<UserDetails> details=userRepo.findAll();
+		  for(UserDetails x:details) {
 			  //System.out.println(x);
 				if(x.getPnrNo()==pnrNo) {
 					x.setPayment("Successful");

@@ -25,7 +25,6 @@ public class PaymentConfiguration extends WebSecurityConfigurerAdapter
 	  	  .antMatchers("/pay/add").hasRole("USER")
 	  	  .antMatchers("/pay/all").permitAll()
 	  	  .and().csrf().disable().headers().frameOptions().disable();
-	  	  //.formLogin(); 
 	 }
   
   @Bean

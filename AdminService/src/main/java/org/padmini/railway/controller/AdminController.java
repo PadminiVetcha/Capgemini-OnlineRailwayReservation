@@ -68,6 +68,5 @@ public class AdminController
 		int finalSeats=initialSeats-noOfPassengers;
 		currentTrain.setNoOfSeats(finalSeats);
 		adminServiceImpl.updateTrainDetails(trainNo, currentTrain);
-		
 	}
 }
