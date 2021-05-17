@@ -23,7 +23,6 @@ public class PaymentServiceApplication {
 		SpringApplication.run(PaymentServiceApplication.class, args);
 	}
 	
-	
 	@Bean
 	public Docket swaggerConfiguration()
 	{
@@ -33,7 +32,6 @@ public class PaymentServiceApplication {
 					.apis(RequestHandlerSelectors.basePackage("org.padmini.railway"))
 					.build()
 					.apiInfo(apiDetails());
-		
 	}
 	
 	private ApiInfo apiDetails()
