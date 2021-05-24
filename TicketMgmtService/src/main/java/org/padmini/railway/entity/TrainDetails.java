@@ -1,5 +1,4 @@
 package org.padmini.railway.entity;
-
 import javax.validation.constraints.Max;
 
 import javax.validation.constraints.NotNull;
@@ -39,7 +38,6 @@ public class TrainDetails
 	private int noOfSeats;
 	@NotNull
 	private TrainClassFares trainClassFares;
-	
 	
 	public TrainDetails() {
 		super();
@@ -137,6 +135,4 @@ public class TrainDetails
 				+ ", destStation=" + destStation + ", arrivalTime=" + arrivalTime + ", deptTime=" + deptTime
 				+ ", duration=" + duration + ", noOfSeats=" + noOfSeats + ", trainClassFares=" + trainClassFares + "]";
 	}
-	
-	
 }

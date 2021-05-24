@@ -34,7 +34,5 @@ public class Passengers
 	@Override
 	public String toString() {
 		return "Passengers [adults=" + adults + ", children=" + children + "]";
-	}
-	
-	
+	}	
 }

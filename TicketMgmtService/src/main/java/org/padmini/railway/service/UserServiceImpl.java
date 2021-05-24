@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService
 	  } 
 	
 	//to send an email after booking of a train ticket
-	 public void sendEmail(long pnrNo) throws AddressException{
+	public void sendEmail(long pnrNo) throws AddressException{
 		 String data1="Your train ticket booking is successful..!!";
 		 String data2= "Please Check the details....!!!!!!";
 		 UserDetails userDet=getUserDetailsById(pnrNo);

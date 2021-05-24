@@ -11,7 +11,6 @@ public class TrainClassFares
 		super();
 	}
 	
-	
 	public TrainClassFares(int firstClassACFare, int twoTierAcFare, int threeTierAcFare, int sleeperFare) {
 		super();
 		this.firstClassACFare = firstClassACFare;
