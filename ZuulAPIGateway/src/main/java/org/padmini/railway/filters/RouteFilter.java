@@ -1,5 +1,4 @@
 package org.padmini.railway.filters;
-
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.exception.ZuulException;
 
@@ -26,5 +25,4 @@ public class RouteFilter extends ZuulFilter
 	public int filterOrder() {
 		return 1;
 	}
-
 }

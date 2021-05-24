@@ -1,5 +1,4 @@
 package org.padmini.railway.filters;
-
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.exception.ZuulException;
 

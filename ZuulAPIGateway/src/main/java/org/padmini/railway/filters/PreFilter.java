@@ -1,5 +1,4 @@
 package org.padmini.railway.filters;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.netflix.zuul.ZuulFilter;
@@ -31,5 +30,4 @@ public class PreFilter extends ZuulFilter
 	public int filterOrder() {
 		return 1;
 	}
-	
 }
