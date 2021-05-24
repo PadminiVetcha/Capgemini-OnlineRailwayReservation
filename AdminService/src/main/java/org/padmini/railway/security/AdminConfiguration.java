@@ -34,4 +34,3 @@ public class AdminConfiguration extends WebSecurityConfigurerAdapter
 	  return NoOpPasswordEncoder.getInstance(); 
   } 
 }
- 

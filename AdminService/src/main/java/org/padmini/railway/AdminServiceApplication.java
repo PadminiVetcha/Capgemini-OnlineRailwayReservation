@@ -1,5 +1,4 @@
 package org.padmini.railway;
-
 import java.util.Collections;
 
 import org.springframework.boot.SpringApplication;
@@ -21,7 +20,6 @@ public class AdminServiceApplication {
 		SpringApplication.run(AdminServiceApplication.class, args);
 	}
 	
-
 	@Bean
 	public Docket swaggerConfiguration()
 	{

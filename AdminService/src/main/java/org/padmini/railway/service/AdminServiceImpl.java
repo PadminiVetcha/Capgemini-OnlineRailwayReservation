@@ -38,7 +38,7 @@ public class AdminServiceImpl implements AdminService
 	public TrainDetails updateTrainDetails(int trainNo,TrainDetails trainDetails)
 	{
 		TrainDetails existingDetails=adminRepo.findById(trainNo)
-				.orElseThrow(()->new ResourceNotFoundException("Cannot update as train not found with number : "+ trainNo));
+				.orElseThrow(()->new ResourceNotFoundException("Cannot update the given train details, as train not found with number : "+ trainNo));
 		existingDetails.setTrainNo(trainDetails.getTrainNo());
 		existingDetails.setTrainName(trainDetails.getTrainName());
 		existingDetails.setStartStation(trainDetails.getStartStation());
@@ -60,6 +60,4 @@ public class AdminServiceImpl implements AdminService
 		return ResponseEntity.ok().build();
 
 	}
-	
-	
 }

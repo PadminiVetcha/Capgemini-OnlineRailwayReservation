@@ -136,7 +136,5 @@ public class TrainDetails
 		return "TrainDetails [trainNo=" + trainNo + ", trainName=" + trainName + ", startStation=" + startStation
 				+ ", destStation=" + destStation + ", arrivalTime=" + arrivalTime + ", deptTime=" + deptTime
 				+ ", duration=" + duration + ", noOfSeats=" + noOfSeats + ", trainClassFares=" + trainClassFares + "]";
-	}
-	
-	
+	}	
 }
