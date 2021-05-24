@@ -1,5 +1,4 @@
 package org.padmini.railway;
-
 import java.util.Collections;
 
 import org.springframework.boot.SpringApplication;
