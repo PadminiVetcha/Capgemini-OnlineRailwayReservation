@@ -1,5 +1,4 @@
 package org.padmini.railway.entity;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -9,7 +8,6 @@ public class DatabaseSequence
 {
 	@Transient
 	public static final String SEQUENCE_NAME = "users_sequence";
-	
 	
 	@Id
 	private String id;

@@ -35,6 +35,4 @@ public class Passengers
 	public String toString() {
 		return "Passengers [adults=" + adults + ", children=" + children + "]";
 	}
-	
-	
 }

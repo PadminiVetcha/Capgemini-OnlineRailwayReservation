@@ -92,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService
 			 emailService.send(email);
 	}
 	
-	 public String sendNotification(String notification)
+	 public String sendNotification(String notification,long pnrNo)
 	 {
 		 ConnectionFactory factory=new ConnectionFactory();
 		 factory.setHost("localhost");
@@ -104,7 +104,7 @@ public class PaymentServiceImpl implements PaymentService
 		 } catch(Exception e) {
 			 e.printStackTrace();
 		 }
-		 return "Payment is done..!!";
+		 return "Payment is successful for the PNR Number " + pnrNo + "...!!!";
 	 }
 	 
 	 public void receiveNotification() throws Exception

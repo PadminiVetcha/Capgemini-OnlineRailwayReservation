@@ -36,11 +36,9 @@ public class PaymentController
 	 public String addPaymentDetails(@Valid @RequestBody PaymentDetails payment) 
 	 { 
 		long pnrNo=payment.getPnrNo();
-		//String msg=("Your payment is successful for PNR Number " +pnrNo);
-		//String msg="Item is pushed to rabbit mq..!!";
 		paySerImpl.proceedToPay(payment); 
 		paySerImpl.updateUserPaymentDetails(payment.getPnrNo());
-		String sentMsg=paySerImpl.sendNotification("Your payment is successful for PNR Number " +pnrNo);
+		String sentMsg=paySerImpl.sendNotification("Your payment is successful for PNR Number " +pnrNo,pnrNo);
 		return sentMsg;  
 	 }
 	 
